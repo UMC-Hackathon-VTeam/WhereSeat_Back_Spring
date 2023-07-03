@@ -21,6 +21,10 @@ public enum SuccessStatus {
      */
     SUCCESS(200,"SUCCESS","요청이 완료 되었습니다."),
     SIGNUP_AVAILABLE(200,"SUCCESS","회원가입이 가능합니다"),
+    UPDATE_DIARY(200,"SUCCESS","일기 수정이 완료 되었습니다."),
+    DELETE_DIARY(200,"SUCCESS","일기 삭제가 완료 되었습니다."),
+    GET_DIARY(200,"SUCCESS","날짜별 일기 조회가 완료 되었습니다."),
+
 
     /**
      * Success Code : 201
@@ -33,6 +37,7 @@ public enum SuccessStatus {
     CREATE_REVIEW(201, "SUCCESS", "리뷰 등록이 완료 되었습니다"),
     CREATE_USER(201, "SUCCESS", "유저 등록이 완료 되었습니다"),
     CREATE_MASTER(201, "SUCCESS", "마스터 등록이 완료 되었습니다"),
+    CREATE_DIARY(201, "SUCCESS", "일기 작성이 완료 되었습니다"),
 
     /**
      * Success Code : 204
