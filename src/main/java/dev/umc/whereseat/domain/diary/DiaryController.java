@@ -52,7 +52,7 @@ public class DiaryController {
         HttpSession session = request.getSession();
         Long memberId = (Long) session.getAttribute("currentMember");
         List<String> responses = diaryService.getCalendar(memberId, year, month);
-        return new SuccessResponse<>(GET_DIARY, responses);
+        return new SuccessResponse<>(GET_CALENDAR, responses);
     }
 
 

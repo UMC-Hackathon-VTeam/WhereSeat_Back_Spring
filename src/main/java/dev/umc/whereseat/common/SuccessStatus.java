@@ -24,6 +24,7 @@ public enum SuccessStatus {
     UPDATE_DIARY(200,"SUCCESS","일기 수정이 완료 되었습니다."),
     DELETE_DIARY(200,"SUCCESS","일기 삭제가 완료 되었습니다."),
     GET_DIARY(200,"SUCCESS","날짜별 일기 조회가 완료 되었습니다."),
+    GET_CALENDAR(200,"SUCCESS","작성한 날짜 조회가 완료 되었습니다."),
 
 
     /**
