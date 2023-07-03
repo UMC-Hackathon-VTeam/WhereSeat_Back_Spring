@@ -5,10 +5,13 @@ import dev.umc.whereseat.domain.diary.dto.GetDiaryResponse;
 import dev.umc.whereseat.domain.diary.dto.UpdateDiaryRequest;
 import dev.umc.whereseat.domain.member.Member;
 import dev.umc.whereseat.domain.member.MemberRepository;
+import dev.umc.whereseat.utils.FileUploadUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
@@ -20,11 +23,13 @@ public class DiaryService {
 
     private final DiaryRepository diaryRepository;
     private final MemberRepository memberRepository;
+    private final FileUploadUtil fileUploadUtil;
 
     @Transactional
-    public Long createDiary(Long memberId, CreateDiaryRequest request) {
+    public Long createDiary(Long memberId, CreateDiaryRequest request, MultipartFile image) throws IOException {
         Member member = memberRepository.findById(memberId).get();
-        Diary newDiary = Diary.newDiary(member, request);
+        String imgUrl = fileUploadUtil.uploadFile("diary", image);
+        Diary newDiary = Diary.newDiary(member, imgUrl, request);
         diaryRepository.save(newDiary);
 
         return newDiary.getId();

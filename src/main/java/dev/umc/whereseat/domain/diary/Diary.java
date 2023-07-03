@@ -42,18 +42,24 @@ public class Diary extends BaseEntity {
         this.comment = comment;
         this.visitedAt = visitedAt;
     }
-    public static Diary newDiary(Member member, CreateDiaryRequest request){
+    public static Diary newDiary(Member member, String image, CreateDiaryRequest request){
         return Diary.builder()
                 .member(member)
-                .image(request.getImage())
+                .image(image)
                 .comment(request.getComment())
                 .visitedAt(request.getVisitedAt())
                 .build();
     }
 
-    public void update(String image, String comment, LocalDate visitedAt){
+    public void updateImage(String image){
         this.image = image;
+    }
+
+    public void updateComment(String comment){
         this.comment = comment;
+    }
+
+    public void updateVisitedAt(LocalDate visitedAt){
         this.visitedAt = visitedAt;
     }
 

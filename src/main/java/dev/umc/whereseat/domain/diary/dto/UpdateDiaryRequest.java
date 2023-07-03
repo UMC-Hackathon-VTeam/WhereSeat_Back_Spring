@@ -17,8 +17,5 @@ public class UpdateDiaryRequest {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate visitedAt;
-
-    private String image;
-
     private String comment;
 }
