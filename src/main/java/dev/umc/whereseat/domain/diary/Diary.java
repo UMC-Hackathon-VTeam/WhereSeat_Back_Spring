@@ -2,6 +2,7 @@ package dev.umc.whereseat.domain.diary;
 
 import dev.umc.whereseat.common.BaseEntity;
 import dev.umc.whereseat.domain.diary.dto.CreateDiaryRequest;
+import dev.umc.whereseat.domain.member.Member;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,9 +21,9 @@ public class Diary extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "member_id")
-//    private Member member;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @Column(nullable = false, columnDefinition="TEXT")
     private String image;
@@ -35,13 +36,15 @@ public class Diary extends BaseEntity {
     private LocalDate visitedAt;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private Diary(String image, String comment, LocalDate visitedAt){
+    private Diary(Member member, String image, String comment, LocalDate visitedAt){
+        this.member = member;
         this.image = image;
         this.comment = comment;
         this.visitedAt = visitedAt;
     }
-    public static Diary newDiary(CreateDiaryRequest request){
+    public static Diary newDiary(Member member, CreateDiaryRequest request){
         return Diary.builder()
+                .member(member)
                 .image(request.getImage())
                 .comment(request.getComment())
                 .visitedAt(request.getVisitedAt())
