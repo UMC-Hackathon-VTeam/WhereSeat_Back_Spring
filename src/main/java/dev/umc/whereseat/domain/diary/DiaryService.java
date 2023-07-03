@@ -3,6 +3,8 @@ package dev.umc.whereseat.domain.diary;
 import dev.umc.whereseat.domain.diary.dto.CreateDiaryRequest;
 import dev.umc.whereseat.domain.diary.dto.GetDiaryResponse;
 import dev.umc.whereseat.domain.diary.dto.UpdateDiaryRequest;
+import dev.umc.whereseat.domain.member.Member;
+import dev.umc.whereseat.domain.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,10 +19,12 @@ import java.util.List;
 public class DiaryService {
 
     private final DiaryRepository diaryRepository;
+    private final MemberRepository memberRepository;
 
     @Transactional
-    public Long createDiary(CreateDiaryRequest request) {
-        Diary newDiary = Diary.newDiary(request);
+    public Long createDiary(Long memberId, CreateDiaryRequest request) {
+        Member member = memberRepository.findById(memberId).get();
+        Diary newDiary = Diary.newDiary(member, request);
         diaryRepository.save(newDiary);
 
         return newDiary.getId();
@@ -34,8 +38,10 @@ public class DiaryService {
         return diary.getId();
     }
 
-    public void deleteDiary(Long id) {
-        diaryRepository.deleteById(id);
+    public void deleteDiary(Long memberId, Long id) {
+        if(diaryRepository.findById(id).get().getMember().getIdx() == memberId){
+            diaryRepository.deleteById(id);
+        }
     }
 
     public GetDiaryResponse getDiary(LocalDate date) {
@@ -43,13 +49,14 @@ public class DiaryService {
         return GetDiaryResponse.of(diary);
     }
 
-    public List<String> getCalendar(int year, int month) {
+    public List<String> getCalendar(Long memberId, int year, int month) {
         YearMonth yearMonth = YearMonth.of(year, month);
 
         LocalDate startOfMonth = yearMonth.atDay(1); // 해당 년-월의 시작일 2022-07-01
         LocalDate endOfMonth = yearMonth.atEndOfMonth(); // 해당 년-월의 마지막일 2022-07-31
 
-        List<Diary> result = diaryRepository.findAllByVisitedAtBetweenOrderByVisitedAt(startOfMonth, endOfMonth);
+        Member member = memberRepository.findById(memberId).get();
+        List<Diary> result = diaryRepository.findAllByMemberAndVisitedAtBetweenOrderByVisitedAt(member, startOfMonth, endOfMonth);
         List<String> responses = new ArrayList<>();
 
         for (Diary diary : result){
