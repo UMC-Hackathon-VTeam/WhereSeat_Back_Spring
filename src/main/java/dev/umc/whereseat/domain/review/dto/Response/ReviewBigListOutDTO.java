@@ -11,23 +11,21 @@ import lombok.Getter;
 
 @Getter
 @Builder(access = AccessLevel.PRIVATE)
-public class ReviewDetailListOutDTO {
+public class ReviewBigListOutDTO {
 
 	private Long id;
-	private String image;
 	private Score score;
-	private String comment;
-	private String details;
+	private String block;
+	private String field;
 
-	static public List<ReviewDetailListOutDTO> of(List<Review> reviews) {
+	static public List<ReviewBigListOutDTO> of(List<Review> reviews) {
 		return reviews.stream()
-			.map(review -> ReviewDetailListOutDTO.builder()
-			.id(review.getId())
-			.image(review.getImage())
-			.score(review.getScore())
-			.comment(review.getComment())
-			.details(review.getDetails())
-			.build())
+			.map(review -> ReviewBigListOutDTO.builder()
+				.id(review.getId())
+				.score(review.getScore())
+				.block(review.getBlock())
+				.field(review.getField())
+				.build())
 			.collect(Collectors.toList());
 	}
 

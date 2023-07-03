@@ -25,17 +25,14 @@ public class ReviewCreateInDTO {
 
 	private String comment;
 
-	private String block;
-
-	private String field;
+	private String details;
 
 	public Review toEntity(){
 		return Review.builder()
 			.image(getImage())
 			.score(getScore())
 			.comment(getComment())
-			.block(getBlock())
-			.field(getField())
+			.details(getDetails())
 			.build();
 	}
 

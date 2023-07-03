@@ -14,8 +14,7 @@ public class ReviewUpdateOutDTO {
 	private String image;
 	private Score score;
 	private String comment;
-	private String block;
-	private String field;
+	private String details;
 
 	static public ReviewUpdateOutDTO of(Review review) {
 		return ReviewUpdateOutDTO.builder()
@@ -23,8 +22,7 @@ public class ReviewUpdateOutDTO {
 			.image(review.getImage())
 			.score(review.getScore())
 			.comment(review.getComment())
-			.block(review.getBlock())
-			.field(review.getField())
+			.details(review.getDetails())
 			.build();
 	}
 

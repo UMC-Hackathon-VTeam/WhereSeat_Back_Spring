@@ -15,17 +15,15 @@ public class ReviewUpdateInDTO {
 
 	private String comment;
 
-	private String block;
+	private String details;
 
-	private String field;
 
 	public Review toEntity(){
 		return Review.builder()
 			.image(getImage())
 			.score(getScore())
 			.comment(getComment())
-			.block(getBlock())
-			.field(getField())
+			.details(getDetails())
 			.build();
 	}
 }

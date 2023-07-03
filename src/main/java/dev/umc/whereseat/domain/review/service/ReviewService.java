@@ -60,11 +60,18 @@ public class ReviewService {
 	/**
 	 * 리뷰 구장별 조회
 	 */
+	@Transactional(readOnly = true)
+	public List<ReviewDetailListOutDTO> getStardiumReview(Long reviewId){
+		List<Review> findReviews = reviewRepository.findAllById(reviewId).orElse(null);
+		return ReviewDetailListOutDTO.of(findReviews);
+	}
+
 
 
 	/**
 	 * 리뷰 좌석별 조회
 	 */
+
 
 
 	/**

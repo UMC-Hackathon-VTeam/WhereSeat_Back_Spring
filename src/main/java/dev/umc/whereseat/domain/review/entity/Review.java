@@ -6,16 +6,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 
-import dev.umc.whereseat.domain.member.Member;
 import dev.umc.whereseat.domain.review.dto.Request.ReviewUpdateInDTO;
-import dev.umc.whereseat.domain.stadium.Stadium;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,7 +20,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Review {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -41,10 +35,7 @@ public class Review {
 	private String comment;
 
 	@Column(nullable = false)
-	private String block;
-
-	@Column(nullable = false)
-	private String field;
+	private String details;
 
 	@Column(nullable = true)
 	private Date visited_at;
@@ -71,8 +62,7 @@ public class Review {
 		String image,
 		Score score,
 		String comment,
-		String block,
-		String field,
+		String details,
 		Date visited_at,
 		Date created_at,
 		Date updated_at,
@@ -84,8 +74,7 @@ public class Review {
 		this.image = image;
 		this.score = score;
 		this.comment = comment;
-		this.block = block;
-		this.field = field;
+		this.details = details;
 		this.visited_at = visited_at;
 		this.created_at = created_at;
 		this.updated_at = updated_at;
@@ -99,8 +88,7 @@ public class Review {
 		this.image = reviewUpdateInDTO.getImage();
 		this.score = reviewUpdateInDTO.getScore();
 		this.comment = reviewUpdateInDTO.getComment();
-		this.block = reviewUpdateInDTO.getBlock();
-		this.field = reviewUpdateInDTO.getField();
+		this.details = reviewUpdateInDTO.getDetails();
 
 		return this;
 	}
