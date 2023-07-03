@@ -1,17 +1,12 @@
 package dev.umc.whereseat.domain.stadium.entity;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import dev.umc.whereseat.common.BaseEntity;
-import dev.umc.whereseat.domain.review.entity.Score;
+import dev.umc.whereseat.domain.seat.Seat;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,22 +21,30 @@ public class Stadium extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(nullable = false)
-	@Enumerated(EnumType.STRING)
-	private Name name;
+	private String name;
 
-	@Column(nullable = false)
-	@Enumerated(EnumType.STRING)
-	private Seat seat;
+	@OneToMany(mappedBy = "stadium", cascade = CascadeType.ALL)
+	private List<Seat> seat = new ArrayList<>();
 
-	@Builder
-	public Stadium(
-		Name name,
-		Seat seat
-	) {
-		this.id = id;
+	private String image;
+
+	@Builder(access = AccessLevel.PRIVATE)
+	public Stadium(String name) {
 		this.name = name;
+	}
+
+	public void updateSeat(List<Seat> seat) {
 		this.seat = seat;
+	}
+
+	public void updateImage(String image) {
+		this.image = image;
+	}
+
+	public static Stadium newStadium(String name){
+		return Stadium.builder()
+				.name(name)
+				.build();
 	}
 
 
