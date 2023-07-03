@@ -1,4 +1,4 @@
-package dev.umc.whereseat.domain.review.dto;
+package dev.umc.whereseat.domain.review.dto.Request;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;

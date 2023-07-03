@@ -1,4 +1,4 @@
-package dev.umc.whereseat.domain.review.dto;
+package dev.umc.whereseat.domain.review.dto.Response;
 
 import dev.umc.whereseat.domain.review.entity.Review;
 import dev.umc.whereseat.domain.review.entity.Score;
