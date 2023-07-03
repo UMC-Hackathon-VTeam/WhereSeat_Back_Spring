@@ -9,6 +9,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.persistence.Column;
 
+import dev.umc.whereseat.domain.member.Member;
 import dev.umc.whereseat.domain.review.entity.Review;
 import dev.umc.whereseat.domain.review.entity.Score;
 import lombok.AccessLevel;
@@ -19,21 +20,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ReviewCreateInDTO {
 
-	private String image;
-
 	private Score score;
 
 	private String comment;
 
 	private String details;
 
-	public Review toEntity(){
-		return Review.builder()
-			.image(getImage())
-			.score(getScore())
-			.comment(getComment())
-			.details(getDetails())
-			.build();
-	}
+	private Member member;
+
 
 }

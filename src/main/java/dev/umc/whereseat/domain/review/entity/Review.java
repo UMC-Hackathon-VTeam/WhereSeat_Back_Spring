@@ -13,7 +13,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import dev.umc.whereseat.common.BaseEntity;
 import dev.umc.whereseat.domain.member.Member;
+import dev.umc.whereseat.domain.review.dto.Request.ReviewCreateInDTO;
 import dev.umc.whereseat.domain.review.dto.Request.ReviewUpdateInDTO;
 import dev.umc.whereseat.domain.stadium.entity.Stadium;
 import lombok.AccessLevel;
@@ -24,7 +26,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Review {
+public class Review extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -42,14 +44,6 @@ public class Review {
 	@Column(nullable = false)
 	private String details;
 
-	@Column(nullable = true)
-	private Date created_at;
-
-	@Column(nullable = true)
-	private Date updated_at;
-
-	@Column(nullable = true)
-	private String status;
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member")
@@ -60,32 +54,35 @@ public class Review {
 	private Stadium stadium;
 
 	@Builder
-	public Review(Long id,
+	public Review(
 		String image,
 		Score score,
 		String comment,
 		String details,
-		Date created_at,
-		Date updated_at,
-		String status,
 		Member member,
 		Stadium stadium
 		) {
-		this.id = id;
 		this.image = image;
 		this.score = score;
 		this.comment = comment;
 		this.details = details;
-		this.created_at = created_at;
-		this.updated_at = updated_at;
-		this.status = status;
 		this.member = member;
 		this.stadium = stadium;
 	}
 
+	public static Review create(Member member, String image, ReviewCreateInDTO reviewCreateInDTO){
+		return Review.builder()
+			.image(image)
+			.score(reviewCreateInDTO.getScore())
+			.comment(reviewCreateInDTO.getComment())
+			.details(reviewCreateInDTO.getDetails())
+			.member(member)
+			.build();
+	}
 
-	public Review update(ReviewUpdateInDTO reviewUpdateInDTO) {
-		this.image = reviewUpdateInDTO.getImage();
+
+	public Review update(ReviewUpdateInDTO reviewUpdateInDTO, String image) {
+		this.image = image;
 		this.score = reviewUpdateInDTO.getScore();
 		this.comment = reviewUpdateInDTO.getComment();
 		this.details = reviewUpdateInDTO.getDetails();

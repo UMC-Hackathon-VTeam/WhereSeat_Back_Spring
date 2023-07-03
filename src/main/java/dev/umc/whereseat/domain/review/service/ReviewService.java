@@ -7,7 +7,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import dev.umc.whereseat.domain.member.Member;
+import dev.umc.whereseat.domain.member.MemberRepository;
 import dev.umc.whereseat.domain.review.dto.Request.ReviewCreateInDTO;
 import dev.umc.whereseat.domain.review.dto.Request.ReviewUpdateInDTO;
 import dev.umc.whereseat.domain.review.dto.Response.ReviewCreateOutDTO;
@@ -18,6 +21,7 @@ import dev.umc.whereseat.domain.review.exception.ReviewException;
 import dev.umc.whereseat.domain.review.repository.ReviewRepository;
 import dev.umc.whereseat.domain.stadium.entity.Stadium;
 import dev.umc.whereseat.domain.stadium.repository.StadiumRepository;
+import dev.umc.whereseat.utils.FileUploadUtil;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -27,13 +31,18 @@ public class ReviewService {
 
 	private final ReviewRepository reviewRepository;
 	private final StadiumRepository stadiumRepository;
+	private final MemberRepository memberRepository;
+	private final FileUploadUtil fileUploadUtil;
 
 	/**
 	 * 리뷰 생성
 	 */
-	public ReviewCreateOutDTO createReview(ReviewCreateInDTO dto) {
+	public ReviewCreateOutDTO createReview(Long memberId, MultipartFile image, ReviewCreateInDTO dto) throws IOException{
+
+		Member member = memberRepository.findById(memberId).get();
+		String imgUrl = fileUploadUtil.uploadFile("diary", image);
 		// 리뷰 엔티티 생성
-		Review review = dto.toEntity();
+		Review review = Review.create(member, imgUrl, dto);
 		reviewRepository.save(review);
 
 		return ReviewCreateOutDTO.of(review);
@@ -42,10 +51,11 @@ public class ReviewService {
 	/**
 	 * 리뷰 업데이트
 	 */
-	public ReviewUpdateOutDTO updateReview(Long reviewId, ReviewUpdateInDTO reviewUpdateInDTO) {
+	public ReviewUpdateOutDTO updateReview(Long reviewId, ReviewUpdateInDTO reviewUpdateInDTO, MultipartFile image) throws
+		IOException {
 		Review review = reviewRepository.findById(reviewId);
-
-		Review updatedReview = review.update(reviewUpdateInDTO);
+		String imgUrl = fileUploadUtil.uploadFile("diary", image);
+		Review updatedReview = review.update(reviewUpdateInDTO, imgUrl);
 		reviewRepository.save(updatedReview);
 
 		return ReviewUpdateOutDTO.of(updatedReview);
@@ -54,12 +64,13 @@ public class ReviewService {
 	/**
 	 * 리뷰 삭제
 	 */
-	public String deleteReview(Long reviewId){
-
-		Review review = reviewRepository.findById(reviewId);
-		reviewRepository.delete(review);
+	public String deleteReview(Long memberId, Long reviewId){
+		if(reviewRepository.findById(reviewId).getMember().getIdx() == memberId){
+			reviewRepository.deleteById(reviewId);
+		}
 		return "리뷰 삭제 완료";
 	}
+
 	/**
 	 * 리뷰 구장별 조회
 	 */

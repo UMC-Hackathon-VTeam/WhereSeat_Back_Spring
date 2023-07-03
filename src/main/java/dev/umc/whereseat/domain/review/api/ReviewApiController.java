@@ -2,7 +2,11 @@ package dev.umc.whereseat.domain.review.api;
 
 import static dev.umc.whereseat.common.SuccessStatus.*;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,7 +16,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import dev.umc.whereseat.common.SuccessResponse;
 import dev.umc.whereseat.domain.review.dto.Request.ReviewCreateInDTO;
@@ -26,28 +32,44 @@ import lombok.RequiredArgsConstructor;
 
 @Validated
 @RestController
-@RequestMapping("/api/reviews")
+@RequestMapping("/reviews")
 @RequiredArgsConstructor
 public class ReviewApiController {
 
 	private final ReviewService reviewService;
 
+	/**
+	 * 리뷰 작성
+	 * */
+
 	@PostMapping
-	public SuccessResponse<ReviewCreateOutDTO> createReview(@Validated @RequestBody ReviewCreateInDTO dto) {
-		ReviewCreateOutDTO reviewCreateOutDTO = reviewService.createReview(dto);
+	public SuccessResponse<ReviewCreateOutDTO> createReview(@Validated @RequestPart ReviewCreateInDTO dto,
+		@RequestPart MultipartFile image,
+		HttpServletRequest request) throws IOException {
+		HttpSession session = request.getSession();
+		Long memberId = (Long) session.getAttribute("currentMember");
+		ReviewCreateOutDTO reviewCreateOutDTO = reviewService.createReview(memberId, image, dto);
 		return new SuccessResponse<>(CREATE_REVIEW, reviewCreateOutDTO);
 	}
-
+	/**
+	 * 리뷰 업데이트
+	 * */
 	@PatchMapping("/{reviewId}")
 	public SuccessResponse<ReviewUpdateOutDTO> updateReview(@PathVariable Long reviewId,
-		@Validated @RequestBody ReviewUpdateInDTO dto){
-		ReviewUpdateOutDTO reviewUpdateOutDTO = reviewService.updateReview(reviewId, dto);
+		@Validated @RequestPart ReviewUpdateInDTO dto,
+		@RequestPart MultipartFile image) throws IOException {
+		ReviewUpdateOutDTO reviewUpdateOutDTO = reviewService.updateReview(reviewId, dto, image);
 		return new SuccessResponse<>(UPDATE_REVIEW, reviewUpdateOutDTO);
 	}
 
+	/***
+	 *개별 리뷰 삭제
+	 */
 	@DeleteMapping("/{reviewId}")
-	public SuccessResponse<String> deleteReview(@PathVariable Long reviewId){
-		return new SuccessResponse<>(SUCCESS, reviewService.deleteReview(reviewId));
+	public SuccessResponse<String> deleteReview(@PathVariable Long reviewId, HttpServletRequest request){
+		HttpSession session = request.getSession();
+		Long memberId = (Long) session.getAttribute("currentMember");
+		return new SuccessResponse<>(SUCCESS, reviewService.deleteReview(memberId,reviewId));
 	}
 
 	/**
