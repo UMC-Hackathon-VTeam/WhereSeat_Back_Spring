@@ -21,7 +21,7 @@ public class FileUploadUtil {
 
     private final AmazonS3Client amazonS3Client;
 
-    public FileUploadResponse uploadFile(String category, MultipartFile multipartFile) throws IOException {
+    public String uploadFile(String category, MultipartFile multipartFile) throws IOException {
 
         String fileName = createFileName(category, multipartFile.getOriginalFilename());
 
@@ -30,9 +30,7 @@ public class FileUploadUtil {
 
         amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, multipartFile.getInputStream(), objectMetadata).withCannedAcl(CannedAccessControlList.PublicRead));
 
-        FileUploadResponse response = new FileUploadResponse(amazonS3Client.getUrl(bucket, fileName).toString(), fileName);
-
-        return response;
+        return amazonS3Client.getUrl(bucket, fileName).toString();
     }
 
     private String createFileName(String category, String originalFileName) {
