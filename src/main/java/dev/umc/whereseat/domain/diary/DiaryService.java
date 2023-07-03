@@ -36,9 +36,21 @@ public class DiaryService {
     }
 
     @Transactional
-    public Long updateDiary(Long diaryId, UpdateDiaryRequest request) {
+    public Long updateDiary(Long diaryId, UpdateDiaryRequest request, MultipartFile image) throws IOException {
         Diary diary = diaryRepository.findById(diaryId).get();
-        diary.update(request.getImage(), request.getComment(), request.getVisitedAt());
+
+        if(image != null){
+            String imgUrl = fileUploadUtil.uploadFile("diary", image);
+            diary.updateImage(imgUrl);
+        }
+
+        if(request.getComment() != null){
+            diary.updateComment(request.getComment());
+        }
+
+        if(request.getVisitedAt() != null){
+            diary.updateVisitedAt(request.getVisitedAt());
+        }
 
         return diary.getId();
     }
