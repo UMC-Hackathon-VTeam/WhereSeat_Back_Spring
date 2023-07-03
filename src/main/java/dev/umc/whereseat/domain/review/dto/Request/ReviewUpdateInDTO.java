@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ReviewUpdateInDTO {
-	private String image;
 
 	private Score score;
 
@@ -17,13 +16,4 @@ public class ReviewUpdateInDTO {
 
 	private String details;
 
-
-	public Review toEntity(){
-		return Review.builder()
-			.image(getImage())
-			.score(getScore())
-			.comment(getComment())
-			.details(getDetails())
-			.build();
-	}
 }

@@ -15,6 +15,7 @@ import javax.persistence.OneToOne;
 
 import dev.umc.whereseat.common.BaseEntity;
 import dev.umc.whereseat.domain.member.Member;
+import dev.umc.whereseat.domain.review.dto.Request.ReviewCreateInDTO;
 import dev.umc.whereseat.domain.review.dto.Request.ReviewUpdateInDTO;
 import dev.umc.whereseat.domain.stadium.entity.Stadium;
 import lombok.AccessLevel;
@@ -53,7 +54,7 @@ public class Review extends BaseEntity {
 	private Stadium stadium;
 
 	@Builder
-	public Review(Long id,
+	public Review(
 		String image,
 		Score score,
 		String comment,
@@ -61,7 +62,6 @@ public class Review extends BaseEntity {
 		Member member,
 		Stadium stadium
 		) {
-		this.id = id;
 		this.image = image;
 		this.score = score;
 		this.comment = comment;
@@ -70,9 +70,19 @@ public class Review extends BaseEntity {
 		this.stadium = stadium;
 	}
 
+	public static Review create(Member member, String image, ReviewCreateInDTO reviewCreateInDTO){
+		return Review.builder()
+			.image(image)
+			.score(reviewCreateInDTO.getScore())
+			.comment(reviewCreateInDTO.getComment())
+			.details(reviewCreateInDTO.getDetails())
+			.member(member)
+			.build();
+	}
 
-	public Review update(ReviewUpdateInDTO reviewUpdateInDTO) {
-		this.image = reviewUpdateInDTO.getImage();
+
+	public Review update(ReviewUpdateInDTO reviewUpdateInDTO, String image) {
+		this.image = image;
 		this.score = reviewUpdateInDTO.getScore();
 		this.comment = reviewUpdateInDTO.getComment();
 		this.details = reviewUpdateInDTO.getDetails();

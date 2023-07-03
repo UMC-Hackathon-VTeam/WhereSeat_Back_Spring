@@ -17,4 +17,6 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
 	Optional<List<Review>> findAllByStadium(Stadium stadium);
 
 	Optional<List<Review>> findAllByDetails(String details);
+
+	void deleteById(Long reviewId);
 }
