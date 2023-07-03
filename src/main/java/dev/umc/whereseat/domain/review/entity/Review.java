@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import dev.umc.whereseat.common.BaseEntity;
 import dev.umc.whereseat.domain.member.Member;
 import dev.umc.whereseat.domain.review.dto.Request.ReviewUpdateInDTO;
 import dev.umc.whereseat.domain.stadium.entity.Stadium;
@@ -24,7 +25,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Review {
+public class Review extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -42,14 +43,6 @@ public class Review {
 	@Column(nullable = false)
 	private String details;
 
-	@Column(nullable = true)
-	private Date created_at;
-
-	@Column(nullable = true)
-	private Date updated_at;
-
-	@Column(nullable = true)
-	private String status;
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member")
@@ -65,9 +58,6 @@ public class Review {
 		Score score,
 		String comment,
 		String details,
-		Date created_at,
-		Date updated_at,
-		String status,
 		Member member,
 		Stadium stadium
 		) {
@@ -76,9 +66,6 @@ public class Review {
 		this.score = score;
 		this.comment = comment;
 		this.details = details;
-		this.created_at = created_at;
-		this.updated_at = updated_at;
-		this.status = status;
 		this.member = member;
 		this.stadium = stadium;
 	}

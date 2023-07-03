@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import dev.umc.whereseat.common.BaseEntity;
 import dev.umc.whereseat.domain.review.entity.Score;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -19,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Stadium {
+public class Stadium extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,29 +34,14 @@ public class Stadium {
 	@Enumerated(EnumType.STRING)
 	private Seat seat;
 
-	@Column(nullable = true)
-	private Date created_at;
-
-	@Column(nullable = true)
-	private Date updated_at;
-
-	@Column(nullable = true)
-	private String status;
-
 	@Builder
 	public Stadium(Long id,
 		Name name,
-		Seat seat,
-		Date created_at,
-		Date updated_at,
-		String status
+		Seat seat
 	) {
 		this.id = id;
 		this.name = name;
 		this.seat = seat;
-		this.created_at = created_at;
-		this.updated_at = updated_at;
-		this.status = status;
 	}
 
 
