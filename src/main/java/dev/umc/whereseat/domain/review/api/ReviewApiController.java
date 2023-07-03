@@ -25,6 +25,7 @@ import dev.umc.whereseat.domain.review.dto.Request.ReviewUpdateInDTO;
 import dev.umc.whereseat.domain.review.dto.Response.ReviewCreateOutDTO;
 import dev.umc.whereseat.domain.review.dto.Response.ReviewDetailListOutDTO;
 import dev.umc.whereseat.domain.review.dto.Response.ReviewUpdateOutDTO;
+import dev.umc.whereseat.domain.review.entity.Review;
 import dev.umc.whereseat.domain.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 
@@ -81,15 +82,15 @@ public class ReviewApiController {
 	/**
 	 * 구단별 리뷰 조회
 	 * */
-	@GetMapping(value = "/stadium/{stadiumName}", produces = "application/x-www-form-urlencoded;charset=UTF-8")
-	public SuccessResponse<List<ReviewDetailListOutDTO>> getStadiumReview(@PathVariable String stadiumName){
+	@GetMapping(value = "/stadium/{stadiumName}")
+	public SuccessResponse<List<Review>> getStadiumReview(@PathVariable String stadiumName){
 		return new SuccessResponse<>(SUCCESS, reviewService.getStadiumReview(stadiumName));
 	}
 
 	/**
 	 * 좌석별 리뷰 조회
 	 * */
-	@GetMapping(value = "/seat/{seats}", produces = "application/x-www-form-urlencoded;charset=UTF-8")
+	@GetMapping(value = "/seat/{seats}")
 	public SuccessResponse<List<ReviewDetailListOutDTO>> getSeatReview(@PathVariable String seats){
 		return new SuccessResponse<>(SUCCESS, reviewService.getSeatReview(seats));
 	}

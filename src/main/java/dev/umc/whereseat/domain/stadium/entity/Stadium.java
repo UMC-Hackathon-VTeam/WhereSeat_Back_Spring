@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import dev.umc.whereseat.common.BaseEntity;
 import dev.umc.whereseat.domain.seat.Seat;
 import lombok.AccessLevel;

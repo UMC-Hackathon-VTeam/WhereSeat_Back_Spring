@@ -46,13 +46,13 @@ public class ReviewService {
 
 		Member member = memberRepository.findById(memberId).get();
 		Stadium stadium = Stadium.newStadium(dto.getName());
-		stadium = stadiumRepository.save(stadium);
-		Seat seat = Seat.newSeat(stadium, dto.getSeat());
-		seat = seatRepository.save(seat);
-		String imgUrl = fileUploadUtil.uploadFile("diary", image);
+		stadiumRepository.save(stadium);
+		//Stadium findStadium = stadiumRepository.findByNameContaining(dto.getName());
+		Seat findSeat = seatRepository.findByNameContaining(dto.getSeat());
+		String imgUrl = fileUploadUtil.uploadFile("review", image);
 
 		// 리뷰 엔티티 생성
-		Review review = Review.create(member, imgUrl, dto, stadium);
+		Review review = Review.create(member, imgUrl, dto, stadium, findSeat);
 		reviewRepository.save(review);
 
 		return ReviewCreateOutDTO.of(review);
@@ -64,10 +64,11 @@ public class ReviewService {
 	public ReviewUpdateOutDTO updateReview(Long reviewId, ReviewUpdateInDTO reviewUpdateInDTO, MultipartFile image) throws
 		IOException {
 		Review review = reviewRepository.findById(reviewId);
-		String imgUrl = fileUploadUtil.uploadFile("diary", image);
+		String imgUrl = fileUploadUtil.uploadFile("review", image);
 		Stadium stadium = Stadium.newStadium(reviewUpdateInDTO.getName());
 		stadiumRepository.save(stadium);
-		Review updatedReview = review.update(reviewUpdateInDTO, imgUrl, stadium);
+		Seat findSeat = seatRepository.findByName(reviewUpdateInDTO.getSeat());
+		Review updatedReview = review.update(reviewUpdateInDTO, imgUrl, stadium, findSeat);
 		reviewRepository.save(updatedReview);
 		return ReviewUpdateOutDTO.of(updatedReview);
 	}
@@ -86,10 +87,10 @@ public class ReviewService {
 	 * 리뷰 구장별 조회
 	 */
 	@Transactional(readOnly = true)
-	public List<ReviewDetailListOutDTO> getStadiumReview(String name){
+	public List<Review> getStadiumReview(String name){
 		List<Stadium> stadiums = stadiumRepository.findAllByName(name);
 		List<Review> findReviews = reviewRepository.findAllByStadiumIn(stadiums);
-		return ReviewDetailListOutDTO.of(findReviews);
+		return findReviews;
 	}
 
 
