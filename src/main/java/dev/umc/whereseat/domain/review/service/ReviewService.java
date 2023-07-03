@@ -3,6 +3,7 @@ package dev.umc.whereseat.domain.review.service;
 import static dev.umc.whereseat.common.ErrorStatus.*;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import dev.umc.whereseat.domain.review.dto.Request.ReviewCreateInDTO;
 import dev.umc.whereseat.domain.review.dto.Request.ReviewUpdateInDTO;
 import dev.umc.whereseat.domain.review.dto.Response.ReviewCreateOutDTO;
+import dev.umc.whereseat.domain.review.dto.Response.ReviewDetailListOutDTO;
 import dev.umc.whereseat.domain.review.dto.Response.ReviewUpdateOutDTO;
 import dev.umc.whereseat.domain.review.entity.Review;
 import dev.umc.whereseat.domain.review.exception.ReviewException;
@@ -55,5 +57,22 @@ public class ReviewService {
 		reviewRepository.delete(review);
 		return "리뷰 삭제 완료";
 	}
+	/**
+	 * 리뷰 구장별 조회
+	 */
 
+
+	/**
+	 * 리뷰 좌석별 조회
+	 */
+
+
+	/**
+	 * 리뷰 상세 조회
+	 */
+	@Transactional(readOnly = true)
+	public List<ReviewDetailListOutDTO> getReview(Long reviewId){
+		List<Review> findReviews = reviewRepository.findAllById(reviewId).orElse(null);
+		return ReviewDetailListOutDTO.of(findReviews);
+	}
 }

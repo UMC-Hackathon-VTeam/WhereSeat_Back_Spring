@@ -11,4 +11,6 @@ import dev.umc.whereseat.domain.review.entity.Review;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
 	Review findById(Long reviewId);
+
+	Optional<List<Review>> findAllById(Long reviewId);
 }

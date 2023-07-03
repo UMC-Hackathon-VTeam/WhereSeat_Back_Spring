@@ -2,8 +2,11 @@ package dev.umc.whereseat.domain.review.api;
 
 import static dev.umc.whereseat.common.SuccessStatus.*;
 
+import java.util.List;
+
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +18,9 @@ import dev.umc.whereseat.common.SuccessResponse;
 import dev.umc.whereseat.domain.review.dto.Request.ReviewCreateInDTO;
 import dev.umc.whereseat.domain.review.dto.Request.ReviewUpdateInDTO;
 import dev.umc.whereseat.domain.review.dto.Response.ReviewCreateOutDTO;
+import dev.umc.whereseat.domain.review.dto.Response.ReviewDetailListOutDTO;
 import dev.umc.whereseat.domain.review.dto.Response.ReviewUpdateOutDTO;
+import dev.umc.whereseat.domain.review.entity.Review;
 import dev.umc.whereseat.domain.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 
@@ -43,6 +48,11 @@ public class ReviewApiController {
 	@DeleteMapping("/{reviewId}")
 	public SuccessResponse<String> deleteReview(@PathVariable Long reviewId){
 		return new SuccessResponse<>(SUCCESS, reviewService.deleteReview(reviewId));
+	}
+
+	@GetMapping("/{reviewId}")
+	public SuccessResponse<List<ReviewDetailListOutDTO>> detailReview(@PathVariable Long reviewId){
+		return new SuccessResponse<>(SUCCESS, reviewService.getReview(reviewId));
 	}
 
 }
