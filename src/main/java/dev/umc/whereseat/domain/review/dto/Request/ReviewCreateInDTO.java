@@ -31,9 +31,6 @@ public class ReviewCreateInDTO {
 
 	private String seat;
 
-	//private Stadium stadium;
-
 	private Member member;
-
 
 }

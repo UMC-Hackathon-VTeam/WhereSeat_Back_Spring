@@ -14,11 +14,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import dev.umc.whereseat.common.BaseEntity;
 import dev.umc.whereseat.domain.member.Member;
 import dev.umc.whereseat.domain.review.dto.Request.ReviewCreateInDTO;
 import dev.umc.whereseat.domain.review.dto.Request.ReviewUpdateInDTO;
+import dev.umc.whereseat.domain.seat.Seat;
 import dev.umc.whereseat.domain.stadium.entity.Stadium;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -55,6 +57,10 @@ public class Review extends BaseEntity {
 	@JoinColumn(name = "stadium")
 	private Stadium stadium;
 
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "seat")
+	private Seat seat;
+
 	@Builder
 	public Review(
 		String image,
@@ -62,7 +68,8 @@ public class Review extends BaseEntity {
 		String comment,
 		String details,
 		Member member,
-		Stadium stadium
+		Stadium stadium,
+		Seat seat
 		) {
 		this.image = image;
 		this.score = score;
@@ -70,9 +77,10 @@ public class Review extends BaseEntity {
 		this.details = details;
 		this.member = member;
 		this.stadium = stadium;
+		this.seat = seat;
 	}
 
-	public static Review create(Member member, String image, ReviewCreateInDTO reviewCreateInDTO, Stadium stadium){
+	public static Review create(Member member, String image, ReviewCreateInDTO reviewCreateInDTO, Stadium stadium, Seat seat){
 		return Review.builder()
 			.image(image)
 			.score(reviewCreateInDTO.getScore())
@@ -80,16 +88,18 @@ public class Review extends BaseEntity {
 			.details(reviewCreateInDTO.getDetails())
 			.member(member)
 			.stadium(stadium)
+			.seat(seat)
 			.build();
 	}
 
 
-	public Review update(ReviewUpdateInDTO reviewUpdateInDTO, String image, Stadium stadium) {
+	public Review update(ReviewUpdateInDTO reviewUpdateInDTO, String image, Stadium stadium, Seat seat) {
 		this.image = image;
 		this.score = reviewUpdateInDTO.getScore();
 		this.comment = reviewUpdateInDTO.getComment();
 		this.details = reviewUpdateInDTO.getDetails();
 		this.stadium = stadium;
+		this.seat = seat;
 
 		return this;
 	}
