@@ -35,7 +35,7 @@ public class Stadium extends BaseEntity {
 	private Seat seat;
 
 	@Builder
-	public Stadium(Long id,
+	public Stadium(
 		Name name,
 		Seat seat
 	) {
