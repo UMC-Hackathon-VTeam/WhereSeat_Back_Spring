@@ -16,6 +16,8 @@ import dev.umc.whereseat.domain.review.dto.Response.ReviewUpdateOutDTO;
 import dev.umc.whereseat.domain.review.entity.Review;
 import dev.umc.whereseat.domain.review.exception.ReviewException;
 import dev.umc.whereseat.domain.review.repository.ReviewRepository;
+import dev.umc.whereseat.domain.stadium.entity.Stadium;
+import dev.umc.whereseat.domain.stadium.repository.StadiumRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -24,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 public class ReviewService {
 
 	private final ReviewRepository reviewRepository;
+	private final StadiumRepository stadiumRepository;
 
 	/**
 	 * 리뷰 생성
@@ -61,16 +64,21 @@ public class ReviewService {
 	 * 리뷰 구장별 조회
 	 */
 	@Transactional(readOnly = true)
-	public List<ReviewDetailListOutDTO> getStardiumReview(Long reviewId){
-		List<Review> findReviews = reviewRepository.findAllById(reviewId).orElse(null);
+	public List<ReviewDetailListOutDTO> getStadiumReview(String name){
+		Stadium stadium = stadiumRepository.findByName(name);
+		List<Review> findReviews = reviewRepository.findAllByStadium(stadium).orElse(null);
 		return ReviewDetailListOutDTO.of(findReviews);
 	}
-
 
 
 	/**
 	 * 리뷰 좌석별 조회
 	 */
+	@Transactional(readOnly = true)
+	public List<ReviewDetailListOutDTO> getSeatReview(String details){
+		List<Review> findReviews = reviewRepository.findAllByDetails(details).orElse(null);
+		return ReviewDetailListOutDTO.of(findReviews);
+	}
 
 
 

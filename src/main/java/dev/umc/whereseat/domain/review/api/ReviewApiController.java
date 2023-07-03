@@ -50,9 +50,28 @@ public class ReviewApiController {
 		return new SuccessResponse<>(SUCCESS, reviewService.deleteReview(reviewId));
 	}
 
+	/**
+	 * 세부 리뷰 조회
+	 * */
 	@GetMapping("/{reviewId}")
 	public SuccessResponse<List<ReviewDetailListOutDTO>> detailReview(@PathVariable Long reviewId){
 		return new SuccessResponse<>(SUCCESS, reviewService.getReview(reviewId));
+	}
+
+	/**
+	 * 구단별 리뷰 조회
+	 * */
+	@GetMapping(value = "/stadium/{stadiumName}", produces = "application/x-www-form-urlencoded;charset=UTF-8")
+	public SuccessResponse<List<ReviewDetailListOutDTO>> getStadiumReview(@PathVariable String stadiumName){
+		return new SuccessResponse<>(SUCCESS, reviewService.getStadiumReview(stadiumName));
+	}
+
+	/**
+	 * 좌석별 리뷰 조회
+	 * */
+	@GetMapping(value = "/seat/{seats}", produces = "application/x-www-form-urlencoded;charset=UTF-8")
+	public SuccessResponse<List<ReviewDetailListOutDTO>> getSeatReview(@PathVariable String seats){
+		return new SuccessResponse<>(SUCCESS, reviewService.getSeatReview(seats));
 	}
 
 }
