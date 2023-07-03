@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.amazonaws.services.cloudformation.model.transform.StackDriftInformationStaxUnmarshaller;
+
 import dev.umc.whereseat.domain.member.Member;
 import dev.umc.whereseat.domain.member.MemberRepository;
 import dev.umc.whereseat.domain.review.dto.Request.ReviewCreateInDTO;
@@ -19,6 +21,8 @@ import dev.umc.whereseat.domain.review.dto.Response.ReviewUpdateOutDTO;
 import dev.umc.whereseat.domain.review.entity.Review;
 import dev.umc.whereseat.domain.review.exception.ReviewException;
 import dev.umc.whereseat.domain.review.repository.ReviewRepository;
+import dev.umc.whereseat.domain.seat.Seat;
+import dev.umc.whereseat.domain.seat.SeatRepository;
 import dev.umc.whereseat.domain.stadium.entity.Stadium;
 import dev.umc.whereseat.domain.stadium.repository.StadiumRepository;
 import dev.umc.whereseat.utils.FileUploadUtil;
@@ -33,6 +37,7 @@ public class ReviewService {
 	private final StadiumRepository stadiumRepository;
 	private final MemberRepository memberRepository;
 	private final FileUploadUtil fileUploadUtil;
+	private final SeatRepository seatRepository;
 
 	/**
 	 * 리뷰 생성
@@ -40,9 +45,14 @@ public class ReviewService {
 	public ReviewCreateOutDTO createReview(Long memberId, MultipartFile image, ReviewCreateInDTO dto) throws IOException{
 
 		Member member = memberRepository.findById(memberId).get();
+		Stadium stadium = Stadium.newStadium(dto.getName());
+		stadium = stadiumRepository.save(stadium);
+		Seat seat = Seat.newSeat(stadium, dto.getSeat());
+		seat = seatRepository.save(seat);
 		String imgUrl = fileUploadUtil.uploadFile("diary", image);
+
 		// 리뷰 엔티티 생성
-		Review review = Review.create(member, imgUrl, dto);
+		Review review = Review.create(member, imgUrl, dto, stadium);
 		reviewRepository.save(review);
 
 		return ReviewCreateOutDTO.of(review);
@@ -55,9 +65,10 @@ public class ReviewService {
 		IOException {
 		Review review = reviewRepository.findById(reviewId);
 		String imgUrl = fileUploadUtil.uploadFile("diary", image);
-		Review updatedReview = review.update(reviewUpdateInDTO, imgUrl);
+		Stadium stadium = Stadium.newStadium(reviewUpdateInDTO.getName());
+		stadiumRepository.save(stadium);
+		Review updatedReview = review.update(reviewUpdateInDTO, imgUrl, stadium);
 		reviewRepository.save(updatedReview);
-
 		return ReviewUpdateOutDTO.of(updatedReview);
 	}
 
@@ -76,8 +87,8 @@ public class ReviewService {
 	 */
 	@Transactional(readOnly = true)
 	public List<ReviewDetailListOutDTO> getStadiumReview(String name){
-		Stadium stadium = stadiumRepository.findByName(name);
-		List<Review> findReviews = reviewRepository.findAllByStadium(stadium).orElse(null);
+		List<Stadium> stadiums = stadiumRepository.findAllByName(name);
+		List<Review> findReviews = reviewRepository.findAllByStadiumIn(stadiums);
 		return ReviewDetailListOutDTO.of(findReviews);
 	}
 
