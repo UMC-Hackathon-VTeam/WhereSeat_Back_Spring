@@ -12,6 +12,7 @@ import javax.persistence.Column;
 import dev.umc.whereseat.domain.member.Member;
 import dev.umc.whereseat.domain.review.entity.Review;
 import dev.umc.whereseat.domain.review.entity.Score;
+import dev.umc.whereseat.domain.stadium.entity.Stadium;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,8 @@ public class ReviewCreateInDTO {
 	private String comment;
 
 	private String details;
+
+	private Stadium stadium;
 
 	private Member member;
 

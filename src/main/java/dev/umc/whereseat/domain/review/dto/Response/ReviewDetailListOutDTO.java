@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import dev.umc.whereseat.domain.review.entity.Review;
 import dev.umc.whereseat.domain.review.entity.Score;
+import dev.umc.whereseat.domain.stadium.entity.Stadium;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,6 +19,7 @@ public class ReviewDetailListOutDTO {
 	private Score score;
 	private String comment;
 	private String details;
+	private Stadium stadium;
 
 	static public List<ReviewDetailListOutDTO> of(List<Review> reviews) {
 		return reviews.stream()
@@ -27,6 +29,7 @@ public class ReviewDetailListOutDTO {
 			.score(review.getScore())
 			.comment(review.getComment())
 			.details(review.getDetails())
+			.stadium(review.getStadium())
 			.build())
 			.collect(Collectors.toList());
 	}
