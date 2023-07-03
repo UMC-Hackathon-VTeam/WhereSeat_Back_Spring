@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import dev.umc.whereseat.domain.member.Member;
+import dev.umc.whereseat.domain.review.dto.Request.ReviewUpdateInDTO;
 import dev.umc.whereseat.domain.stadium.Stadium;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -94,4 +95,13 @@ public class Review {
 	}
 
 
+	public Review update(ReviewUpdateInDTO reviewUpdateInDTO) {
+		this.image = reviewUpdateInDTO.getImage();
+		this.score = reviewUpdateInDTO.getScore();
+		this.comment = reviewUpdateInDTO.getComment();
+		this.block = reviewUpdateInDTO.getBlock();
+		this.field = reviewUpdateInDTO.getField();
+
+		return this;
+	}
 }

@@ -70,6 +70,7 @@ public enum ErrorStatus {
     // todo : 중복 이메일 통합하기
     DUPLICATE_USER_LOGIN_EMAIL(400,"FAIL","중복된 마스터 계정의 이메일입니다.");
 
+    public static String NOT_UPDATE_IMAGE;
     private final int code;
     private final String result;
     private final String message;
