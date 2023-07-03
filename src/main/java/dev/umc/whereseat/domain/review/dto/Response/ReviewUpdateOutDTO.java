@@ -2,6 +2,7 @@ package dev.umc.whereseat.domain.review.dto.Response;
 
 import dev.umc.whereseat.domain.review.entity.Review;
 import dev.umc.whereseat.domain.review.entity.Score;
+import dev.umc.whereseat.domain.stadium.entity.Stadium;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,6 +16,7 @@ public class ReviewUpdateOutDTO {
 	private Score score;
 	private String comment;
 	private String details;
+	private Stadium stadium;
 
 	static public ReviewUpdateOutDTO of(Review review) {
 		return ReviewUpdateOutDTO.builder()
@@ -23,6 +25,7 @@ public class ReviewUpdateOutDTO {
 			.score(review.getScore())
 			.comment(review.getComment())
 			.details(review.getDetails())
+			.stadium(review.getStadium())
 			.build();
 	}
 

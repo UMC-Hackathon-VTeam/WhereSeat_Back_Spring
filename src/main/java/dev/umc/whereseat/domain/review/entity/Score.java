@@ -1,6 +1,7 @@
 package dev.umc.whereseat.domain.review.entity;
 
 public enum Score {
+	ZERO(0),
 	ONE(1),
 	TWO(2),
 	THREE(3),

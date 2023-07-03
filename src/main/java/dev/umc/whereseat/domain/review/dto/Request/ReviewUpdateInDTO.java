@@ -16,4 +16,8 @@ public class ReviewUpdateInDTO {
 
 	private String details;
 
+	private String name;
+
+	private String seat;
+
 }

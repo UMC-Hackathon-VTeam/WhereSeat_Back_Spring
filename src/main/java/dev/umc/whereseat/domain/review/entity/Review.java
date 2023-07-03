@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import dev.umc.whereseat.common.BaseEntity;
 import dev.umc.whereseat.domain.member.Member;
 import dev.umc.whereseat.domain.review.dto.Request.ReviewCreateInDTO;
@@ -70,22 +72,24 @@ public class Review extends BaseEntity {
 		this.stadium = stadium;
 	}
 
-	public static Review create(Member member, String image, ReviewCreateInDTO reviewCreateInDTO){
+	public static Review create(Member member, String image, ReviewCreateInDTO reviewCreateInDTO, Stadium stadium){
 		return Review.builder()
 			.image(image)
 			.score(reviewCreateInDTO.getScore())
 			.comment(reviewCreateInDTO.getComment())
 			.details(reviewCreateInDTO.getDetails())
 			.member(member)
+			.stadium(stadium)
 			.build();
 	}
 
 
-	public Review update(ReviewUpdateInDTO reviewUpdateInDTO, String image) {
+	public Review update(ReviewUpdateInDTO reviewUpdateInDTO, String image, Stadium stadium) {
 		this.image = image;
 		this.score = reviewUpdateInDTO.getScore();
 		this.comment = reviewUpdateInDTO.getComment();
 		this.details = reviewUpdateInDTO.getDetails();
+		this.stadium = stadium;
 
 		return this;
 	}

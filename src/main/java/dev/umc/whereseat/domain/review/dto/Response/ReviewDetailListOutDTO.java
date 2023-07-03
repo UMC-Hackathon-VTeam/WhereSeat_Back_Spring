@@ -3,6 +3,8 @@ package dev.umc.whereseat.domain.review.dto.Response;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import dev.umc.whereseat.domain.review.entity.Review;
 import dev.umc.whereseat.domain.review.entity.Score;
 import dev.umc.whereseat.domain.stadium.entity.Stadium;
@@ -19,6 +21,8 @@ public class ReviewDetailListOutDTO {
 	private Score score;
 	private String comment;
 	private String details;
+
+	@JsonIgnore
 	private Stadium stadium;
 
 	static public List<ReviewDetailListOutDTO> of(List<Review> reviews) {
