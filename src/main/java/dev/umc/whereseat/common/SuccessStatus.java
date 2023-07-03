@@ -40,11 +40,14 @@ public enum SuccessStatus {
     CREATE_MASTER(201, "SUCCESS", "마스터 등록이 완료 되었습니다"),
     CREATE_DIARY(201, "SUCCESS", "일기 작성이 완료 되었습니다"),
 
+    UPDATE_REVIEW(202, "SUCCESS", "리뷰 업데이트가 완료 되었습니다."),
+
     /**
      * Success Code : 204
      * No Content
      */
     NO_CONTENT_SUCCESS(204, "SUCCESS", "요청에 대한 정보가 없습니다.");
+
 
     private final int code;
     private final String result;
