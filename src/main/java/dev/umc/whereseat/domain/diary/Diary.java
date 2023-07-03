@@ -25,19 +25,22 @@ public class Diary extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @Column(nullable = false)
+    private String title;
     @Column(nullable = false, columnDefinition="TEXT")
     private String image;
 
     @Column(nullable = false, columnDefinition="TEXT")
     private String comment;
 
-    @Column
+    @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate visitedAt;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private Diary(Member member, String image, String comment, LocalDate visitedAt){
+    private Diary(Member member, String title, String image, String comment, LocalDate visitedAt){
         this.member = member;
+        this.title = title;
         this.image = image;
         this.comment = comment;
         this.visitedAt = visitedAt;
@@ -45,6 +48,7 @@ public class Diary extends BaseEntity {
     public static Diary newDiary(Member member, String image, CreateDiaryRequest request){
         return Diary.builder()
                 .member(member)
+                .title(request.getTitle())
                 .image(image)
                 .comment(request.getComment())
                 .visitedAt(request.getVisitedAt())
@@ -64,4 +68,5 @@ public class Diary extends BaseEntity {
     }
 
 
+    public void updateTitle(String title) { this.title = title;}
 }
