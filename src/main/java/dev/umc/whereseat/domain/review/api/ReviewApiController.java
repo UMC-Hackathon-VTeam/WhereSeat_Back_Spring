@@ -3,6 +3,7 @@ package dev.umc.whereseat.domain.review.api;
 import static dev.umc.whereseat.common.SuccessStatus.*;
 
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,6 +38,11 @@ public class ReviewApiController {
 		@Validated @RequestBody ReviewUpdateInDTO dto){
 		ReviewUpdateOutDTO reviewUpdateOutDTO = reviewService.updateReview(reviewId, dto);
 		return new SuccessResponse<>(UPDATE_REVIEW, reviewUpdateOutDTO);
+	}
+
+	@DeleteMapping("/{reviewId}")
+	public SuccessResponse<String> deleteReview(@PathVariable Long reviewId){
+		return new SuccessResponse<>(SUCCESS, reviewService.deleteReview(reviewId));
 	}
 
 }

@@ -45,4 +45,15 @@ public class ReviewService {
 
 		return ReviewUpdateOutDTO.of(updatedReview);
 	}
+
+	/**
+	 * 리뷰 삭제
+	 */
+	public String deleteReview(Long reviewId){
+
+		Review review = reviewRepository.findById(reviewId);
+		reviewRepository.delete(review);
+		return "리뷰 삭제 완료";
+	}
+
 }
