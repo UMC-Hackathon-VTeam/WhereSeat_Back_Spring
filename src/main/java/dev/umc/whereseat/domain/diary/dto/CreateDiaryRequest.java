@@ -21,6 +21,4 @@ public class CreateDiaryRequest {
     private String image;
 
     private String comment;
-
-    private Long memberId;
 }
