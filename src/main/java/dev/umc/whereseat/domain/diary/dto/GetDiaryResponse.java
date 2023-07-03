@@ -14,9 +14,10 @@ import java.time.LocalDate;
 public class GetDiaryResponse {
     private String image;
     private LocalDate visitedAt;
+    private String title;
     private String comment;
 
     public static GetDiaryResponse of(Diary diary){
-        return new GetDiaryResponse(diary.getImage(), diary.getVisitedAt(), diary.getComment());
+        return new GetDiaryResponse(diary.getImage(), diary.getVisitedAt(), diary.getTitle(), diary.getComment());
     }
 }

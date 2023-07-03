@@ -44,6 +44,10 @@ public class DiaryService {
             diary.updateImage(imgUrl);
         }
 
+        if(request.getTitle() != null){
+            diary.updateTitle(request.getTitle());
+        }
+
         if(request.getComment() != null){
             diary.updateComment(request.getComment());
         }
