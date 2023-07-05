@@ -1,5 +1,4 @@
 # 어디앉아
-### 💗 4th UMC HACKATHON 최우수상 💗 
 ![image 15](https://github.com/UMC-Hackathon-VTeam/WhereSeat_Back_Spring/assets/78026977/d9e4637d-4381-4582-8065-a7a14eb5f495)
 국내 야구장의 좌석 후기를 공유하고 나만의 직관 일기를 기록하는 앱
 
