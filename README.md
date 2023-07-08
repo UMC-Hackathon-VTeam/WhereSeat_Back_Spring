@@ -1,6 +1,8 @@
 # 어디앉아
 ![image 15](https://github.com/UMC-Hackathon-VTeam/WhereSeat_Back_Spring/assets/78026977/d9e4637d-4381-4582-8065-a7a14eb5f495)
 국내 야구장의 좌석 후기를 공유하고 나만의 직관 일기를 기록하는 앱
+### 요구사항 및 기능 명세서 ⬇️
+https://bead-help-a4f.notion.site/abf032abdd4b44d589b1822946674582?pvs=4
 
 <br>
 
