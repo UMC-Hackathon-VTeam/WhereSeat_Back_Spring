@@ -1,8 +1,6 @@
 # 어디앉아
 ![image 15](https://github.com/UMC-Hackathon-VTeam/WhereSeat_Back_Spring/assets/78026977/d9e4637d-4381-4582-8065-a7a14eb5f495)
 국내 야구장의 좌석 후기를 공유하고 나만의 직관 일기를 기록하는 앱
-### 요구사항 및 기능 명세서 ⬇️
-https://bead-help-a4f.notion.site/abf032abdd4b44d589b1822946674582?pvs=4
 
 <br>
 
@@ -17,6 +15,12 @@ https://bead-help-a4f.notion.site/abf032abdd4b44d589b1822946674582?pvs=4
 | [허영은/아리](https://github.com/youngeun-dev) | [임재영/제이스](https://github.com/limjustin)  | [정다연/잉퓨](https://github.com/inpyu) |
 <br>
 
+## 📑 Docs
+- 요구사항 및 기능 명세서 [[링크]](https://bead-help-a4f.notion.site/abf032abdd4b44d589b1822946674582)
+- API 명세서 [[링크]](https://bead-help-a4f.notion.site/API-e9ec64495f304027a177361b4dd1b14f)
+
+<br>
+
 ## 📚 Stack
 - Language - Java 11
 - Framework - Spring Framework (Spring Boot, Spring MVC)
@@ -26,7 +30,7 @@ https://bead-help-a4f.notion.site/abf032abdd4b44d589b1822946674582?pvs=4
 - DB - MySQL(RDS)
 <br>
 
-## 🔍 서비스 Flowchart
+## 🔍 서비스 플로우차트
 <img width="1062" alt="image" src="https://github.com/UMC-Hackathon-VTeam/WhereSeat_Back_Spring/assets/78026977/86088aca-1db1-491d-8827-ef5ccf91ab40">
 
 <br>
